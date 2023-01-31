@@ -1,10 +1,19 @@
 import React from 'react'
 
-import { ExampleComponent } from 'use-abort-controller-ssp'
-import 'use-abort-controller-ssp/dist/index.css'
+import useAbortControllerEffect from 'use-abort-controller-ssp'
+
+const testRequest = async (signal) => {
+  await fetch('https://random-data-api.com/api/company/random_company', {
+    signal: signal
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+  // *** Please Open Your Console On Browser To See What Happened ***
+}
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  useAbortControllerEffect([testRequest], [])
+  return <></>
 }
 
 export default App
