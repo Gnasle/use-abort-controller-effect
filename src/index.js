@@ -4,6 +4,7 @@ import objectUtils from './utils/index'
 
 /**
  * Invoke callbacks with params in dependencies and attach signal to the request.
+ * Return a list of abortController.
  * @constructor
  * @param {Array} callbacks - The array contains api requests .
  * @param {Array} dependencies - The params of above requests .
