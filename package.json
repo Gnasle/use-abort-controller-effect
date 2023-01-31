@@ -1,10 +1,19 @@
 {
   "name": "use-abort-controller-ssp",
   "version": "1.0.0",
-  "description": "custom hook made by combine useEffect and AbortController to attach a signal property which is passed into requests and an abort() method which is whenever you want to cancel a request",
-  "author": "Gnasle",
+  "description": "Custom hook made by combined useEffect and AbortController to attach a signal property to requests and an abort() method which is whenever you want to cancel a request",
+  "keywords": [
+    "react",
+    "custom-hook",
+    "useEffect",
+    "abortController"
+  ],
+  "author": {
+    "name": "Gnasle",
+    "email": "sang.le@skillspar.com"
+  },
   "license": "MIT",
-  "repository": "Gnasle/use-abort-controller-ssp",
+  "repository": "https://github.com/Gnasle",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
