@@ -1099,20 +1099,20 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-const isEmptyObject = obj => {
+var isEmptyObject = function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 };
 var objectUtils = {
-  isEmptyObject
+  isEmptyObject: isEmptyObject
 };
 
-const handleOnAttachSignalToFunctions = (callbacks, dependencies) => {
-  return callbacks.map(func => {
-    let abortController = new AbortController();
-    let signal = abortController.signal;
+var handleOnAttachSignalToFunctions = function handleOnAttachSignalToFunctions(callbacks, dependencies) {
+  return callbacks.map(function (func) {
+    var abortController = new AbortController();
+    var signal = abortController.signal;
     if (typeof func !== 'function') return new Error('Expect a function');
     if (!objectUtils.isEmptyObject(dependencies)) {
-      const [params] = dependencies;
+      var params = dependencies[0];
       func(params, signal);
     } else {
       func(signal);
@@ -1120,22 +1120,34 @@ const handleOnAttachSignalToFunctions = (callbacks, dependencies) => {
     return abortController;
   });
 };
-const useAbortControllerEffect = (callbacks = [], dependencies = [], isSetTimeout = false, milliseconds = 1) => {
-  useEffect(() => {
+var useAbortControllerEffect = function useAbortControllerEffect(callbacks, dependencies, isSetTimeout, milliseconds) {
+  if (callbacks === void 0) {
+    callbacks = [];
+  }
+  if (dependencies === void 0) {
+    dependencies = [];
+  }
+  if (isSetTimeout === void 0) {
+    isSetTimeout = false;
+  }
+  if (milliseconds === void 0) {
+    milliseconds = 1;
+  }
+  useEffect(function () {
     if (callbacks.length <= 0) {
       return;
     }
-    let callbackWithTimeout, abortControllers;
+    var callbackWithTimeout, abortControllers;
     if (isSetTimeout) {
-      callbackWithTimeout = setTimeout(() => {
+      callbackWithTimeout = setTimeout(function () {
         abortControllers = handleOnAttachSignalToFunctions(callbacks, dependencies);
       }, milliseconds);
     } else {
       abortControllers = handleOnAttachSignalToFunctions(callbacks, dependencies);
     }
-    return () => {
+    return function () {
       if (abortControllers) {
-        abortControllers.forEach(c => {
+        abortControllers.forEach(function (c) {
           c.abort();
         });
       }
