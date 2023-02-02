@@ -1099,19 +1099,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-var isEmptyObject = function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-};
-var objectUtils = {
-  isEmptyObject: isEmptyObject
-};
-
 var handleOnAttachSignalToFunctions = function handleOnAttachSignalToFunctions(callbacks, dependencies) {
   return callbacks.map(function (func) {
     var abortController = new AbortController();
     var signal = abortController.signal;
     if (typeof func !== 'function') return new Error('Expect a function');
-    if (!objectUtils.isEmptyObject(dependencies)) {
+    if (dependencies.length > 0) {
       var params = dependencies[0];
       func(params, signal);
     } else {
