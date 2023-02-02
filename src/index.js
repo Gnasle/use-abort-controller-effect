@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import objectUtils from './utils/index'
 
 /**
  * Invoke callbacks with params in dependencies and attach signal to the request.
@@ -13,11 +12,12 @@ import objectUtils from './utils/index'
 const handleOnAttachSignalToFunctions = (callbacks, dependencies) => {
   return callbacks.map((func) => {
     // * Create abort controller signal
-    let abortController = new AbortController()
-    let signal = abortController.signal
+    // eslint-disable-next-line no-undef
+    const abortController = new AbortController()
+    const signal = abortController.signal
 
     if (typeof func !== 'function') return new Error('Expect a function')
-    if (!objectUtils.isEmptyObject(dependencies)) {
+    if (dependencies.length > 0) {
       const [params] = dependencies
       func(params, signal)
     } else {
